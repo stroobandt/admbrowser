@@ -12,7 +12,7 @@ setup(
         'A browser designed for locked-down kiosk use,'
         ' based on QtWebEngine.'
     ),
-    url="http://github.com/alandmoore/admbrowser",
+    url="https://github.com/alandmoore/admbrowser",
     license='GPL v3',
     long_description=long_description,
     packages=find_packages(),

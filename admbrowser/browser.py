@@ -167,6 +167,9 @@ class MainWindow(qtw.QMainWindow):
         self.setCentralWidget(self.browser_window)
         self.browser_window.error.connect(self.show_error)
 
+        # Listen for feature permission requests
+        self.browser_window.page().featurePermissionRequested.connect(self.onFeaturePermissionRequested)
+
         # Icon theme setting
         qtg.QIcon.setThemeName(self.config.icon_theme)
 
@@ -315,6 +318,22 @@ class MainWindow(qtw.QMainWindow):
             self.event_filter = None
 
         # ##END OF UI SETUP## #
+
+    def onFeaturePermissionRequested(self, security_origin, feature):
+        """Feature permission request listener
+
+        This event listener checks whether to permit a specific Qt WebEngine
+        feature like notifications or geolocation.
+        See also: https://doc.qt.io/qt-5/qwebenginepage.html#Feature-enum
+        """
+        if (self.config.notifications and feature == 0 or
+            self.config.geolocation   and feature == 1):
+            # https://stackoverflow.com/questions/45689597/openlayers-geolocation-in-pyqt-5-9
+            self.browser_window.page().setFeaturePermission(
+                security_origin,
+                feature,
+                qtwe.QWebEnginePage.PermissionGrantedByUser
+            )
 
     def screensaver(self):
         """Enter "screensaver" mode
@@ -507,6 +526,7 @@ def main():
     # Create the qapplication object,
     # so it can interpret the qt-specific CLI args
     app = ADMBrowserApp(sys.argv)
+    app.setApplicationName("admbrowser")
     sys.exit(app.exec_())
 
 

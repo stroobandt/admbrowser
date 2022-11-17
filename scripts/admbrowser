@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ADMBROWSER
 # This is a sample launcher script
 # It assumes you've installed admbrowser to /usr/local/share
