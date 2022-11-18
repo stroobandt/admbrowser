@@ -1,0 +1,6 @@
+geolocation: True
+navigation: True
+privacy_mode: True
+start_url: https://browserleaks.com/geo
+window_size: max
+window_title: geo
